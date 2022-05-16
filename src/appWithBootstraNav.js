@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Routes,Route, Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -16,14 +16,8 @@ function App(){
 
   const updateTodoItems = (id,description,complete) => {
     const item ={id, task: description, complete};
-    localStorage.setItem("list", JSON.stringify([...todos, item]))
     changeTodos((state)=> [...state, item]);
   }
-
-  useEffect(() => {
-    const listContents =localStorage.getItem("list");
-    changeTodos(JSON.parse(listContents)||[])
-  },[])
 
     return (
       <div>
