@@ -77,10 +77,10 @@ function Add(props){
             />
           </Form.Group>
 
-          <Form.Group controlId="complete">
+          <Form.Group controlId="completed">
             <Form.Check 
               type="checkbox"
-              id="complete"
+              name="completed"
               label="Completed?"
               value={formValues.completed}
               onChange={(event)=>handleChange(event)} 
