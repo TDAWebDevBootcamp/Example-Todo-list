@@ -62,6 +62,7 @@ function Add(props){
             <Form.Control 
               name="id" 
               type="number"
+              value={formValues.id}
               onChange={(event)=>handleChange(event)} 
             />
           </Form.Group>
@@ -71,6 +72,7 @@ function Add(props){
             <Form.Control 
               name="description" 
               type="text"
+              value={formValues.description}
               onChange={(event)=>handleChange(event)}  
             />
           </Form.Group>
@@ -80,6 +82,7 @@ function Add(props){
               type="checkbox"
               id="complete"
               label="Completed?"
+              value={formValues.completed}
               onChange={(event)=>handleChange(event)} 
             />
           </Form.Group>
