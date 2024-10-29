@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-
+import React, {useState} from 'react';
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
@@ -8,16 +7,13 @@ import 'toastr/build/toastr.min.css';
 
 
 
-function Edit(props){
- 
+function Add(props){
+  
   const [formValues, changeFormValues]=useState({
-    id:"",
-    title: "",
-    description: "" ,
-    dueDate: "",
+    id:0,
+    description:"",
     completed:false,
   });
-  const [disabled, changeDisabled] = useState(false);
 
   toastr.options = {
     "closeButton": false,
@@ -49,39 +45,24 @@ function Edit(props){
 
   const submitHandler = (event) => {
     event.preventDefault();
-    changeDisabled(true);
-    props.onSubmit(formValues.id, formValues.title, formValues.description, formValues.dueDate, formValues.completed);
+    props.onSubmit(formValues.id, formValues.description, formValues.completed);
     toastr["success"]("Todo added", "Success")
     changeFormValues({
-      id:"",
-      title:"",
+      id: 0,
       description:"",
-      dueDate:"",
       completed: false
     })
-    changeDisabled(false);
   }
-  useEffect(() => {
-    changeFormValues({
-      id: props.todo.id,
-      title: props.todo.title,
-      description: props.todo.description ,
-      dueDate: props.todo.dueDate,
-      completed:false
-    })
-  },[])
 
   return (
       <div>
-  
         <Form onSubmit={(event) => submitHandler(event)}>
-        <Form.Group controlId="taskTitle">
-            <Form.Label>Title</Form.Label>
+          <Form.Group controlId="taskID">
+            <Form.Label> Task ID</Form.Label>
             <Form.Control 
-              name="title" 
-              type="text"
-              value={formValues.title}
-              onChange={(event)=>handleChange(event)}  
+              name="id" 
+              type="number"
+              onChange={(event)=>handleChange(event)} 
             />
           </Form.Group>
 
@@ -90,37 +71,25 @@ function Edit(props){
             <Form.Control 
               name="description" 
               type="text"
-              value={formValues.description}
               onChange={(event)=>handleChange(event)}  
             />
           </Form.Group>
 
-          <Form.Group controlId="taskDueDate">
-            <Form.Label> Due Date</Form.Label>
-            <Form.Control 
-              name="dueDate" 
-              type="text"
-              value={formValues.dueDate}
-              onChange={(event)=>handleChange(event)}  
-            />
-          </Form.Group>
-
-          <Form.Group controlId="completed">
+          <Form.Group controlId="complete">
             <Form.Check 
               type="checkbox"
-              name="completed"
+              id="complete"
               label="Completed?"
-              value={formValues.completed}
               onChange={(event)=>handleChange(event)} 
             />
           </Form.Group>
           
-          <Button variant="primary" type="submit" disabled={disabled}>
-            Update
+          <Button variant="primary" type="submit">
+            Submit
           </Button>
         </Form>
       </div>
   );
 
 }
-export default Edit;
+export default Add;
