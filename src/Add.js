@@ -10,10 +10,12 @@ import 'toastr/build/toastr.min.css';
 function Add(props){
   
   const [formValues, changeFormValues]=useState({
-    id:0,
+    title: "",
     description:"",
+    dueDate:"",
     completed:false,
   });
+  const [disabled, changeDisabled] = useState(false);
 
   toastr.options = {
     "closeButton": false,
@@ -45,25 +47,28 @@ function Add(props){
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onSubmit(formValues.id, formValues.description, formValues.completed);
+    changeDisabled(true);
+    props.onSubmit(formValues.title, formValues.description, formValues.dueDate, formValues.completed);
     toastr["success"]("Todo added", "Success")
     changeFormValues({
-      id: 0,
+      title:"",
       description:"",
+      dueDate:"",
       completed: false
     })
+    changeDisabled(false);
   }
 
   return (
       <div>
         <Form onSubmit={(event) => submitHandler(event)}>
-          <Form.Group controlId="taskID">
-            <Form.Label> Task ID</Form.Label>
+        <Form.Group controlId="taskTitle">
+            <Form.Label>Title</Form.Label>
             <Form.Control 
-              name="id" 
-              type="number"
-              value={formValues.id}
-              onChange={(event)=>handleChange(event)} 
+              name="title" 
+              type="text"
+              value={formValues.title}
+              onChange={(event)=>handleChange(event)}  
             />
           </Form.Group>
 
@@ -73,6 +78,16 @@ function Add(props){
               name="description" 
               type="text"
               value={formValues.description}
+              onChange={(event)=>handleChange(event)}  
+            />
+          </Form.Group>
+
+          <Form.Group controlId="taskDueDate">
+            <Form.Label> Due Date</Form.Label>
+            <Form.Control 
+              name="dueDate" 
+              type="text"
+              value={formValues.dueDate}
               onChange={(event)=>handleChange(event)}  
             />
           </Form.Group>
@@ -87,7 +102,7 @@ function Add(props){
             />
           </Form.Group>
           
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" disabled={disabled}>
             Submit
           </Button>
         </Form>
